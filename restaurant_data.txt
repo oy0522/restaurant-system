@@ -1,1 +1,2 @@
 {'id': 1, 'name': 'Tomato Soup', 'price': 25.0, 'category': 'soup'}
+{'id': 2, 'name': 'Truffle Risotto', 'price': 35.0, 'category': 'Main Course'}

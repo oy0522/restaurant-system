@@ -48,54 +48,62 @@ def delete_dish(dish_id):
         return True
     return False
 def cli_interface():
-    while True:
-        print("\n1. Add Dish")
-        print("2. View All Dishes")
-        print("3. Update Dish")
-        print("4. Delete Dish")
-        print("5. Exit")
-        choice = input("Enter your choice: ")
+    def cli_interface():
+        while True:
+            print("\n===== Restaurant Management System =====")
+            print("1. Add New Dish")
+            print("2. View All Dishes")
+            print("3. Update Dish Info")
+            print("4. Delete Dish")
+            print("5. Exit System")
+            print("========================================")
+            choice = input("Please enter your choice (1-5): ")
 
-        if choice == '1':
-            name = input("Enter dish name: ")
-            price = float(input("Enter dish price: "))
-            category = input("Enter dish category: ")
-            add_dish(name, price, category)
-            print("Dish added successfully.")
-        elif choice == '2':
-            dishes = get_all_dishes()
-            if not dishes:
-                print("No dishes found.")
-                continue
-            for dish in dishes:
-                print(f"ID: {dish['id']}, Name: {dish['name']}, Price: {dish['price']}, Category: {dish['category']}")
-        elif choice == '3':
-            dish_id = int(input("Enter dish ID to update: "))
-            name = input("Enter new dish name (leave blank to keep current): ")
-            price_input = input("Enter new dish price (leave blank to keep current): ")
-            category = input("Enter new dish category (leave blank to keep current): ")
-            new_data = {}
-            if name:
-                new_data['name'] = name
-            if price_input:
-                new_data['price'] = float(price_input)
-            if category:
-                new_data['category'] = category
-            if update_dish(dish_id, new_data):
-                print("Dish updated successfully.")
+            if choice == '1':
+                name = input("Enter dish name: ")
+                price = float(input("Enter dish price: "))
+                category = input("Enter dish category: ")
+                add_dish(name, price, category)
+                print("✅ Dish added successfully!")
+            elif choice == '2':
+                dishes = get_all_dishes()
+                if not dishes:
+                    print("❌ No dishes found in the system.")
+                    continue
+                print("\n📋 All Dishes:")
+                print(f"{'ID':<4} {'Name':<20} {'Price':<10} {'Category'}")
+                print("-" * 50)
+                for dish in dishes:
+                    print(f"{dish['id']:<4} {dish['name']:<20} ${dish['price']:<9} {dish['category']}")
+            elif choice == '3':
+                dish_id = int(input("Enter dish ID to update: "))
+                name = input("Enter new name (leave blank to keep): ")
+                price_input = input("Enter new price (leave blank to keep): ")
+                category = input("Enter new category (leave blank to keep): ")
+                new_data = {}
+                if name:
+                    new_data['name'] = name
+                if price_input:
+                    new_data['price'] = float(price_input)
+                if category:
+                    new_data['category'] = category
+                if update_dish(dish_id, new_data):
+                    print("✅ Dish updated successfully!")
+                else:
+                    print("❌ Dish not found.")
+            elif choice == '4':
+                dish_id = int(input("Enter dish ID to delete: "))
+                if delete_dish(dish_id):
+                    print("✅ Dish deleted successfully!")
+                else:
+                    print("❌ Dish not found.")
+            elif choice == '5':
+                print("👋 Thank you for using the system. Goodbye!")
+                break
             else:
-                print("Dish not found.")
-        elif choice == '4':
-            dish_id = int(input("Enter dish ID to delete: "))
-            if delete_dish(dish_id):
-                print("Dish deleted successfully.")
-            else:
-                print("Dish not found.")
-        elif choice == '5':
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+                print("❌ Invalid choice! Please enter a number between 1-5.")
 
+    if __name__ == "__main__":
+        cli_interface()
 if __name__ == "__main__":
-    cli_interface():
+    cli_interface()
